@@ -46,6 +46,11 @@ public class Booking {
     public void setSeat(int seat) {
         this.seat = seat;
     }
+
+    @Override
+    public String toString() {
+        return bcode + " | " + ccode + " | " + seat;
+    }
     
     
 }

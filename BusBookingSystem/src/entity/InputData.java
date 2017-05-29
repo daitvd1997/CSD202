@@ -22,11 +22,11 @@ public class InputData {
         String bcode, busName;
         int seat, booked;
         double departTime, arrivalTime;
-        
+
         do {
             System.out.print("Enter bus code: ");
             bcode = in.nextLine().trim();
-        }while(!isBcode(list, bcode));
+        } while (!isBcode(list, bcode));
         System.out.print("Enter name of bus: ");
         busName = in.nextLine().trim();
         seat = (int) valid.getNumber("Enter seat: ", "Seat is invalid", 0, 50);
@@ -44,6 +44,75 @@ public class InputData {
             if (node.getData().getBcode().equalsIgnoreCase(bcode)) {
                 System.out.println("Code is existed!!");
                 return false;
+            }
+            node = node.getNext();
+        }
+        return true;
+    }
+
+    public Customer inputCus(SinglyLinkedList<Customer> list) {
+        Scanner in = new Scanner(System.in);
+        Validate valid = new Validate();
+        String ccode, cusName, phone;
+        do {
+            System.out.print("Enter customer code: ");
+            ccode = in.nextLine();
+        } while (!isCcode(list, ccode));
+        System.out.print("Enter name of custumer: ");
+        cusName = in.nextLine();
+        do {
+            System.out.print("Enter phone number :");
+            phone = in.nextLine();
+        } while (!valid.isPhone(phone));
+        Customer cus = new Customer(ccode, cusName, phone);
+        return cus;
+    }
+
+    public boolean isCcode(SinglyLinkedList<Customer> list, String ccode) {
+        Node<Customer> node;
+        node = list.getHead();
+        while (node != null) {
+            if (node.getData().getCcode().equalsIgnoreCase(ccode)) {
+                System.out.println("Code is existed!!");
+                return false;
+            }
+            node = node.getNext();
+        }
+        return true;
+    }
+
+    public Booking inputDataBooking(SinglyLinkedList<Customer> cus,
+            SinglyLinkedList<Bus> bus) {
+        Scanner in = new Scanner(System.in);
+        Validate valid = new Validate();
+        String bcode, ccode;
+        int seat;
+        do {
+            System.out.print("Enter Bus Code: ");
+            bcode = in.nextLine();
+        } while (isBcode(bus, bcode));
+        do {
+            System.out.print("Enter custemer Code: ");
+            ccode = in.nextLine();
+        } while (isCcode(cus, ccode));
+        do {
+            seat = (int) valid.getNumber("Enter seat :", "Seat invalid", 0, 100);
+            if (!isSeat(bus, seat, bcode)) {
+                System.out.println("Out of seat");
+            }
+        } while (!isSeat(bus, seat, bcode));
+        Booking booking = new Booking(bcode, ccode, seat);
+        return booking;
+    }
+
+    public boolean isSeat(SinglyLinkedList<Bus> bus, int seat, String bcode) {
+        Node<Bus> node;
+        node = bus.getHead();
+        while (node != null) {
+            if (node.getData().getBcode().equalsIgnoreCase(bcode)) {
+                if (seat+node.getData().getBooked() > node.getData().getSeat()) {
+                    return false;
+                }
             }
             node = node.getNext();
         }

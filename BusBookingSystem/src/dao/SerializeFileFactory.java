@@ -5,8 +5,8 @@
  */
 package dao;
 
-import entity.Book;
-import entity.Reader;
+import entity.Bus;
+import entity.Customer;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -30,12 +30,12 @@ import node.SinglyLinkedList;
  */
 public class SerializeFileFactory {
 
-    public static boolean saveDataBook(SinglyLinkedList<Book> list, String path) {
+    public static boolean saveDataBus(SinglyLinkedList<Bus> list, String path) {
         try {
             FileOutputStream fos = new FileOutputStream(path);
             OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
             BufferedWriter bw = new BufferedWriter(osw);
-            Node<Book> node = list.getHead();
+            Node<Bus> node = list.getHead();
             while (node != null) {
                 bw.write(node.getData().toString());
                 bw.newLine();
@@ -52,12 +52,12 @@ public class SerializeFileFactory {
         return false;
     }
     
-    public static boolean saveDataReader(SinglyLinkedList<Reader> list, String path) {
+    public static boolean saveDataCustomer(SinglyLinkedList<Customer> list, String path) {
         try {
             FileOutputStream fos = new FileOutputStream(path);
             OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
             BufferedWriter bw = new BufferedWriter(osw);
-            Node<Reader> node = list.getHead();
+            Node<Customer> node = list.getHead();
             while (node != null) {
                 bw.write(node.getData().toString());
                 bw.newLine();
@@ -74,8 +74,8 @@ public class SerializeFileFactory {
         return false;
     }
 
-    public static SinglyLinkedList<Book> readBookData(String path) {
-        SinglyLinkedList<Book> list = new SinglyLinkedList();
+    public static SinglyLinkedList<Bus> readDataBus(String path) {
+        SinglyLinkedList<Bus> list = new SinglyLinkedList();
         try {
             FileInputStream fis = new FileInputStream(path);
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
@@ -86,12 +86,13 @@ public class SerializeFileFactory {
                     String line = br.readLine().replace("\n", "");
                     StringTokenizer st = new StringTokenizer(line, "|");
                     String bcode = st.nextToken().trim();
-                    String title = st.nextToken().trim();
-                    int quanity = Integer.parseInt(st.nextToken().trim());
-                    st.nextToken().trim();
-                    double price = Double.parseDouble(st.nextToken().trim());
-                    Book book = new Book(bcode, title, quanity, 0, price);
-                    list.inserToTail(book);
+                    String busName = st.nextToken().trim();
+                    int seat = Integer.parseInt(st.nextToken().trim());
+                    int booked = Integer.parseInt(st.nextToken().trim());
+                    double departTime = Double.parseDouble(st.nextToken().trim());
+                    double arrivalTime = Double.parseDouble(st.nextToken().trim());
+                    Bus bus = new Bus(bcode, busName, seat, booked, departTime, arrivalTime);
+                    list.inserToTail(bus);
                 } catch (Exception ex) {
                     break;
                 }
@@ -107,8 +108,8 @@ public class SerializeFileFactory {
         return list;
     }
 
-    public static SinglyLinkedList<Reader> readReaderData(String path) {
-        SinglyLinkedList<Reader> list = new SinglyLinkedList();
+    public static SinglyLinkedList<Customer> readCustumerData(String path) {
+        SinglyLinkedList<Customer> list = new SinglyLinkedList();
         try {
             FileInputStream fis = new FileInputStream(path);
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
@@ -117,11 +118,11 @@ public class SerializeFileFactory {
                 try {
                     String line = br.readLine().replaceAll("  ", " ");
                     StringTokenizer st = new StringTokenizer(line, "|");
-                    String rcode = st.nextToken().trim();
-                    String name = st.nextToken().trim();
-                    int ryear = Integer.parseInt(st.nextToken().trim());
-                    Reader reader = new Reader(rcode, name, ryear);
-                    list.inserToTail(reader);
+                    String ccode = st.nextToken().trim();
+                    String cusName = st.nextToken().trim();
+                    String phone = st.nextToken().trim();
+                    Customer cus = new Customer(ccode, cusName, phone);
+                    list.inserToTail(cus);
                 } catch (Exception ex) {
                     break;
                 }

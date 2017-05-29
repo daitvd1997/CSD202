@@ -11,7 +11,7 @@ package gui;
  */
 public class Menu {
 
-    public void prinBook() {
+    public void prinBus() {
         System.out.println("1.      Load data from file\n"
                 + "2.      Input & add to the head\n"
                 + "3.      Display data\n"
@@ -30,7 +30,7 @@ public class Menu {
                 + "3.      Display data\n"
                 + "4.      Save customer list to file\n"
                 + "5.      Search by ccode\n"
-                + "6.      Delete by ccode\b"
+                + "6.      Delete by ccode\n"
                 + "7.      Back\n");
     }
 

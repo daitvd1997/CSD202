@@ -5,6 +5,9 @@
  */
 package entity;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  *
  * @author Lyser
@@ -75,6 +78,13 @@ public class Bus {
 
     public void setArrivalTime(double arrivalTime) {
         this.arrivalTime = arrivalTime;
+    }
+
+    @Override
+    public String toString() {
+        double arr = arrivalTime-departTime;
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        return bcode + "  |    " + busName + " | " + seat + " |   " + booked + "   |   " + departTime + "   |     " + arrivalTime + "   |  " +formatter.format(arr);
     }
     
     

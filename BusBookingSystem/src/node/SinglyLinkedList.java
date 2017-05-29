@@ -269,4 +269,18 @@ public class SinglyLinkedList<T> {
             pNode = pNode.next;
         }
     }
+    
+    public void deleteBeforeNode(Node x) {
+        if (isEmpty()) {
+            System.out.println("Linked list is empty");
+            return;
+        }
+        if (head == tail) {
+            return;
+        }
+        if(x.next == null) {
+            return;
+        }
+        x.setNext(x.getNext().getNext());
+    }
 }
